@@ -85,7 +85,7 @@ add_subdirectory(libuv)
 file(GLOB libuv hashlink/libs/uv/*.c)
 add_library(uv.hdll STATIC ${libuv})
 target_include_directories(uv.hdll PUBLIC libuv/include)
-target_link_libraries(uv.hdll libuv)
+target_link_libraries(uv.hdll uv)
 
 # Heaps Application
 add_library(heapsapp SHARED out/main.c jni.c)
