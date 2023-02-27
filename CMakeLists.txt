@@ -79,7 +79,15 @@ target_link_libraries(openal.hdll OpenAL)
 file(GLOB ui hashlink/libs/ui/ui_stub.c)
 add_library(ui.hdll STATIC ${ui})
 
+# LibUV
+
+add_subdirectory(libuv)
+file(GLOB libuv hashlink/libs/openal/*.c)
+add_library(uv.hdll STATIC ${libuv})
+target_include_directories(uv.hdll PUBLIC libuv/include)
+target_link_libraries(uv.hdll libuv)
+
 # Heaps Application
 add_library(heapsapp SHARED out/main.c jni.c)
 target_include_directories(heapsapp PRIVATE out)
-target_link_libraries(heapsapp hl sdl.hdll fmt.hdll openal.hdll ui.hdll)
+target_link_libraries(heapsapp hl sdl.hdll fmt.hdll openal.hdll ui.hdll uv.hdll)
