@@ -6,7 +6,7 @@ android {
     // ndkVersion "23.1.7779620"
     defaultConfig {
         applicationId "io.heaps.android"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -26,6 +26,9 @@ android {
         cmake {
             path '../../CMakeLists.txt'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 

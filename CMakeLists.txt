@@ -80,14 +80,32 @@ file(GLOB ui hashlink/libs/ui/ui_stub.c)
 add_library(ui.hdll STATIC ${ui})
 
 # LibUV
-
 add_subdirectory(libuv)
 file(GLOB libuv hashlink/libs/uv/*.c)
 add_library(uv.hdll STATIC ${libuv})
 target_include_directories(uv.hdll PUBLIC libuv/include)
 target_link_libraries(uv.hdll uv)
 
+# Heaps hdll
+file(GLOB heaps hashlink/libs/heaps/*.c*)
+file(GLOB mesh hashlink/include/meshoptimizer/*.cpp)
+file(GLOB mikkt hashlink/include/mikktspace/*.c)
+add_library(heaps.hdll STATIC ${heaps} ${mesh})
+target_include_directories(heaps.hdll PRIVATE
+	hashlink/include/meshoptimizer
+	hashlink/include/mikktspace
+	hashlink/include/vhacd
+)
+target_link_libraries(heaps.hdll)
+
+# SQLite hdll
+file(GLOB sqlite hashlink/libs/sqlite/sqlite.c)
+file(GLOB sqlite3 hashlink/include/sqlite/src/*.c)
+add_library(sqlite.hdll STATIC ${sqlite} ${sqlite3})
+target_include_directories(sqlite.hdll PUBLIC hashlink/include/sqlite/src)
+target_link_libraries(sqlite.hdll)
+
 # Heaps Application
 add_library(heapsapp SHARED out/main.c jni.c)
 target_include_directories(heapsapp PRIVATE out)
-target_link_libraries(heapsapp hl sdl.hdll fmt.hdll openal.hdll ui.hdll uv.hdll)
+target_link_libraries(heapsapp hl sdl.hdll fmt.hdll heaps.hdll sqlite.hdll openal.hdll ui.hdll uv.hdll)
